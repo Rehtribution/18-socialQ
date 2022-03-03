@@ -16,7 +16,7 @@ const userController = {
                 res.sendStatus(400);
             });
     },
-    
+
     // get one User by id
     getUserById({ params }, res) {
         User.findOne({ _id: params.id })
@@ -51,11 +51,17 @@ const userController = {
             })
             .catch(err => res.json(err));
     },
-    
+
     // delete User
     deleteUser({ params }, res) {
         User.findOneAndDelete({ _id: params.id })
-            .then(dbUserData => res.json(dbUserData))
+            .then(dbUserData => {
+                if (!dbUserData) {
+                    res.status(404).json({ message: 'No User found with this id!' });
+                    return;
+                }
+                res.json(dbUserData);
+            })
             .catch(err => res.json(err));
     }
 };
