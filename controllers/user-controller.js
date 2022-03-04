@@ -1,7 +1,9 @@
 const { User } = require('../models');
 
 const userController = {
+
     // get all users
+    // GET /api/user
     getAllUsers(req, res) {
         User.find({})
             .populate({
@@ -19,7 +21,8 @@ const userController = {
             });
     },
 
-    // get one User by id
+    // get one user
+    // GET /api/user/:id
     getUserById({ params }, res) {
         User.findOne({ _id: params.id })
             .populate({
@@ -35,6 +38,7 @@ const userController = {
     },
 
     // createUser
+    // POST /api/user
     createUser({ body }, res) {
         User.create(body)
             .then(dbUserData => res.json(dbUserData))
@@ -42,6 +46,7 @@ const userController = {
     },
 
     // update User by id
+    // PUT /api/user/:id
     updateUser({ params, body }, res) {
         User.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
             .then(dbUserData => {
@@ -55,6 +60,7 @@ const userController = {
     },
 
     // delete User
+    // DELETE /api/user/:id
     deleteUser({ params }, res) {
         User.findOneAndDelete({ _id: params.id })
             .then(dbUserData => {
