@@ -6,9 +6,11 @@ const userController = {
         User.find({})
             .populate({
                 path: 'thoughts',
+                //do not return the __v field
                 select: '-__v'
             })
             .select('-__v')
+            //sort in decending order newest first
             .sort({ _id: -1 })
             .then(dbUserData => res.json(dbUserData))
             .catch(err => {

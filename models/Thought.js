@@ -18,6 +18,8 @@ const ReactionSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now,
+        //he value in the createdAt field will be formatted by the dateFormat() function and used instead of the default timestamp value.
+        get: (createdAtVal) => dateFormat(createdAtVal)
     },
 });
 
@@ -38,6 +40,7 @@ const ThoughtSchema = new Schema(
             type: String,
             required: true
         },
+        //associate the reactions with the thoughts
         reactions: [ReactionSchema],
     },
     {
