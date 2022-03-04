@@ -72,7 +72,7 @@ console.log(params);
     // PUT /api/thought/:id
     updateThought({ params, body }, res) {
         Thought.findOneAndUpdate(
-            { _id: params.thoughtId }, body, { new: true }
+            { _id: params.id }, body, { new: true }
         )
             .populate({
                 path: 'reactions',
@@ -91,10 +91,11 @@ console.log(params);
                 res.status(400).json(err);
             });
     },
+
     // delete thought
     // DELETE /api/thought/:id
     removeThought({ params }, res) {
-        Thought.findOneAndDelete({ _id: params.thoughtId })
+        Thought.findOneAndDelete({ _id: params.id })
             .then(deletedThought => {
                 if (!deletedThought) {
                     return res.status(404).json({ message: "No one's thought of this yet!" });
