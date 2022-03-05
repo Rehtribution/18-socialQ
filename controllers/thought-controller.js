@@ -43,13 +43,13 @@ const thoughtController = {
     // create thought attached to user
     // POST /api/thought
     createThought({ params, body }, res) {
-console.log(params);
+        console.log(params);
         Thought.create(body)
             // find user by id
             .then(({ dbThoughts }) => {
-                 User.findOneAndUpdate(
+                User.findOneAndUpdate(
                     { _id: params.userId },
-                    { $push: { thoughts: dbThoughts} },
+                    { $push: { thoughts: dbThoughts } },
                     { new: true }
                 );
                 console.log(dbThoughts);
@@ -57,7 +57,7 @@ console.log(params);
             // attach the thought
             .then(dbUserData => {
                 if (!dbUserData) {
-                    res.status(400).json({ message: "No one by that name here!" });
+                    res.status(400).json({ message: "Thought posted!" });
                     return;
                 }
                 res.json(dbUserData)
@@ -117,6 +117,37 @@ console.log(params);
     },
 
     // add reaction
+    createReaction({ params, body }, res) {
+        Thought.findOneAndUpdate(
+            { _id: params.thoughtId },
+            { $push: { reactions: body } },
+            { new: true, runValidators: true }
+        )
+            .then(dbuserData => {
+                if (!dbuserData) {
+                    res.status(404).json({ message: 'No one by that name here!' });
+                    return;
+                }
+                res.json(dbuserData);
+            })
+            .catch(err => res.json(err));
+    },
+
     // delete reaction
-}
+    deleteReaction({ params }, res) {
+        Thought.findOneAndUpdate(
+            { _id: params.thoughtId },
+            { $pull: { reactions: { reactionId: params.reactionId } } },
+            { new: true }
+        )
+            .then(dbuserData => {
+                if (!dbuserData) {
+                    res.status(404).json({ message: 'Oops something went wrong!' });
+                    return;
+                }
+                res.json(dbuserData);
+            })
+            .catch(err => res.json(err));
+    }
+};
 module.exports = thoughtController
