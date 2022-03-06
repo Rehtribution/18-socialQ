@@ -24,7 +24,9 @@ const userController = {
     // get one user
     // GET /api/user/:id
     getUserById({ params }, res) {
-        User.findOne({ _id: params.id })
+        User.findOne(
+            { _id: params.id }
+        )
             .populate({
                 path: 'thoughts',
                 select: '-__v'
@@ -48,7 +50,11 @@ const userController = {
     // update User by id
     // PUT /api/user/:id
     updateUser({ params, body }, res) {
-        User.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
+        User.findOneAndUpdate(
+            { _id: params.id },
+            body,
+            { new: true, runValidators: true }
+        )
             .then(dbUserData => {
                 if (!dbUserData) {
                     res.status(404).json({ message: 'No User found with this id!' });
@@ -69,6 +75,46 @@ const userController = {
                     return;
                 }
                 res.json(dbUserData);
+            })
+            .catch(err => res.json(err));
+    },
+
+    // add friend
+    // POST /api/user/:id/friends/:friendId
+    addFriend({ params }, res) {
+        User.findOneAndUpdate(
+            { _id: params.id },
+            { $push: { friends: params.friendId } },
+            { new: true, runValidators: true }
+        )
+            .populate({ path: 'friends', select: ('-__v') })
+            .select('-__v')
+            .then(dbUserData => {
+                if (!dbUserData) {
+                    res.status(404).json({ message: 'No User found with this id!' });
+                    return;
+                }
+                res.json({message: 'User successfully friended!'});
+            })
+            .catch(err => res.json(err));
+    },
+    
+    // remove friend
+    // DELETE /api/user/:id/friends/:friendId
+    unFriend({ params }, res) {
+        User.findOneAndUpdate(
+            { _id: params.id },
+            { $pull: { friends: params.friendId } },
+            { new: true, runValidators: true }
+        )
+            .populate({ path: 'friends', select: ('-__v') })
+            .select('-__v')
+            .then(dbUserData => {
+                if (!dbUserData) {
+                    res.status(404).json({ message: 'No User found with this id!' });
+                    return;
+                }
+                res.json({message: 'User successfully unfriended!'});
             })
             .catch(err => res.json(err));
     }
