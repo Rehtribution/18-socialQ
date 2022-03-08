@@ -4,11 +4,7 @@
 
 - [Media](#screenshot/media)
 
-- [Usage](#usage)
-
 - [Built With](#built-with)
-
-- [Installation-Requirements](#installation-requirements)
 
 - [Installation](#installation)
 
@@ -46,10 +42,6 @@ THEN I am able to successfully create and delete reactions to thoughts and add a
 
 
 
-## Usage
-
-
-
 ## Built With
 
 - JavaScript
@@ -57,11 +49,6 @@ THEN I am able to successfully create and delete reactions to thoughts and add a
 - NPM
   - Express
   - Mongoose
-
-## Installation-Requirements
-
-- NPM
-  - Express
 
 
 ## Installation

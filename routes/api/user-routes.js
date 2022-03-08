@@ -17,10 +17,10 @@ router
 
 // /api/Users/:id
 router
-.route('/:id')
-.get(getUserById)
-.put(updateUser)
-.delete(deleteUser);
+  .route('/:id')
+  .get(getUserById)
+  .put(updateUser)
+  .delete(deleteUser);
 
 // /api/Users/:id/friends/:friendId
 router

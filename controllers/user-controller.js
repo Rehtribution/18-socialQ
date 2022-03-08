@@ -32,18 +32,25 @@ const userController = {
                 select: '-__v'
             })
             .select('-__v')
-            .then(dbUserData => res.json(dbUserData))
+            .then(dbUserData => {
+                if (!dbUserData) {
+                    res.status(404).json({ message: 'No User by that ID here! 🤷‍♂️' });
+                    return;
+                }
+                res.json(dbUserData);
+            })
             .catch(err => {
                 console.log(err);
                 res.sendStatus(400);
-            });
+            })
     },
 
     // createUser
     // POST /api/user
     createUser({ body }, res) {
         User.create(body)
-            .then(dbUserData => res.json(dbUserData))
+            .then(dbUserData => res.json({ message: '🎉 Welcome to SocialQ ' + dbUserData.username + '! 🎉' })
+            )
             .catch(err => res.json(err));
     },
 
@@ -57,10 +64,10 @@ const userController = {
         )
             .then(dbUserData => {
                 if (!dbUserData) {
-                    res.status(404).json({ message: 'No User found with this id!' });
+                    res.status(404).json({ message: 'No User found with this id! 🤷‍♂️' });
                     return;
                 }
-                res.json(dbUserData);
+                res.json({ message: dbUserData.username +' info updated! 🪄~~' });
             })
             .catch(err => res.json(err));
     },
@@ -71,10 +78,13 @@ const userController = {
         User.findOneAndDelete({ _id: params.id })
             .then(dbUserData => {
                 if (!dbUserData) {
-                    res.status(404).json({ message: 'No User found with this id!' });
+                    res.status(404).json({ message: 'No User found with this id! 🤷‍♂️' });
                     return;
                 }
-                res.json(dbUserData);
+                // .then(remove user from friends here)
+                // .then(remove user thoughts and comments here)
+
+                res.json({ message: '💔 Sorry to see you go ' + dbUserData.username + '! 😢' });
             })
             .catch(err => res.json(err));
     },
@@ -91,14 +101,14 @@ const userController = {
             .select('-__v')
             .then(dbUserData => {
                 if (!dbUserData) {
-                    res.status(404).json({ message: 'No User found with this id!' });
+                    res.status(404).json({ message: 'No User found with this id! 🤷‍♂️' });
                     return;
                 }
-                res.json({message: 'User successfully friended!'});
+                res.json({ message: '✨ New friend successfully added! ✨' });
             })
             .catch(err => res.json(err));
     },
-    
+
     // remove friend
     // DELETE /api/user/:id/friends/:friendId
     unFriend({ params }, res) {
@@ -114,7 +124,7 @@ const userController = {
                     res.status(404).json({ message: 'No User found with this id!' });
                     return;
                 }
-                res.json({message: 'User successfully unfriended!'});
+                res.json({ message: '👻~~User successfully unfriended~~👻' });
             })
             .catch(err => res.json(err));
     }

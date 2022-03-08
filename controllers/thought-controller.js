@@ -96,23 +96,24 @@ const thoughtController = {
     // DELETE /api/thought/:id
     removeThought({ params }, res) {
         Thought.findOneAndDelete({ _id: params.id })
-            .then(deletedThought => {
-                if (!deletedThought) {
-                    return res.status(404).json({ message: "No one's thought of this yet!" });
-                }
+            .then(dbThoughts => {
+                if (!dbThoughts) {
+                    return res.status(404).json({ message: "No one's thought of this yet! 🔮" });
+                }                
                 return user.findOneAndUpdate(
                     { _id: params.userId },
                     { $pull: { thoughts: params.thoughtId } },
                     { new: true }
-                );
-            })
-            .then(dbuserData => {
-                if (!dbuserData) {
-                    res.status(404).json({ message: "No one by that name here!" });
-                    return;
-                }
-                res.json(dbuserData);
-            })
+                    );
+                })
+                
+                .then(dbuserData => {
+                    if (!dbuserData) {
+                        res.status(404).json({ message: "No one by that name here!" });
+                        return;
+                    }
+                    res.json({ message: "=== 🥸 REDACTED 🥸 ===" });
+                })
             .catch(err => res.json(err));
     },
 
@@ -128,7 +129,7 @@ const thoughtController = {
                     res.status(404).json({ message: 'No one by that name here!' });
                     return;
                 }
-                res.json(dbuserData);
+                res.json({reactions: body});
             })
             .catch(err => res.json(err));
     },
@@ -145,7 +146,7 @@ const thoughtController = {
                     res.status(404).json({ message: 'Oops something went wrong!' });
                     return;
                 }
-                res.json(dbuserData);
+                res.json({ message: "=== 🥸 REDACTED 🥸 ===" });
             })
             .catch(err => res.json(err));
     }
