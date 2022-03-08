@@ -10,7 +10,6 @@
 
 - [Authors](#authors)
 
-- [Contributions](#contributions)
 
 <h2 align="center">User Story</h2>
 
@@ -30,17 +29,17 @@ THEN I am able to successfully create and delete reactions to thoughts and add a
 ```
 
 ## Screenshot/Media
+</br>
 
-<h3 align="center">replace 1</h3>
+<h3>Walkthrough Video Minus Delete User</h3>
 
-![login-gif](https://github.com/Rehtribution/p2-TK0/blob/75666e094b6e491ff3873539ea8ebf64d7a1b364/public/media/Login.gif)
+[![Walkthrough Video - CLICK HERE](https://img.shields.io/badge/Walkthrough_Video-CLICK_HERE-darkgreen?style=for-the-badge)](https://drive.google.com/file/d/1GoMzqTdXScj3GK5qEb8CyHXnyMjQNP-q/view)
 
-<h3 align="center">2</h3>
+<h3>Walkthrough Video of Delete User</h3>
 
+[![Walkthrough Video - CLICK HERE](https://img.shields.io/badge/Walkthrough_Video-CLICK_HERE-darkgreen?style=for-the-badge)](https://drive.google.com/file/d/1mQ8po0ZCp27094Ucev038oVh1diwq42j/view)
 
-<h3 align="center">3</h3>
-
-
+</br>
 
 ## Built With
 
@@ -58,11 +57,13 @@ In the terminal enter these commands:
 ```
 npm i
 ```
+```
+npm start
+```
 
 ## Authors
 
 [![GitHub Portfolio -> - Rehtribution](https://img.shields.io/badge/GitHub_Portfolio_-->-Rehtribution-darkred?style=for-the-badge)](https://github.com/Rehtribution)
 
 
-## Contributions
 
